@@ -34,13 +34,23 @@ class DieFragment : Fragment() {
             dieTextView = findViewById(R.id.dieTextView)
         }
     }
+    
+    companion object {
+        @JvmStatic
+        fun newInstance(dieSides: Int) =
+            DieFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(DIESIDE, dieSides)
+                }
+            }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         throwDie()
-        view.setOnClickListener{
-            throwDie()
-        }
+//        view.setOnClickListener{
+//            throwDie()
+//        }
     }
 
     fun throwDie() {
