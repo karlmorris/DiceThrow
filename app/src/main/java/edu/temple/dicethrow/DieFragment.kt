@@ -34,7 +34,7 @@ class DieFragment : Fragment() {
             dieTextView = findViewById(R.id.dieTextView)
         }
     }
-    
+
     companion object {
         @JvmStatic
         fun newInstance(dieSides: Int) =
