@@ -10,8 +10,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         findViewById<Button>(R.id.rollDiceButton).setOnClickListener {
-            DieFragment.newInstance(6)
-            (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as DieFragment).throwDie();
+            if( (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) is DieFragment)){
+
+            }
+            else{
+                DieFragment.newInstance(6)
+                (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as DieFragment).throwDie();
+            }
+
         }
     }
 }
