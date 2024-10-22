@@ -60,6 +60,7 @@ class DieFragment : Fragment() {
 
     companion object {
 
+
         fun newInstance(sides: Int): DieFragment {
             val fragment = DieFragment()
             val args = Bundle()
