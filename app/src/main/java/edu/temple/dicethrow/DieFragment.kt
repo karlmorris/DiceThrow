@@ -25,6 +25,7 @@ class DieFragment : Fragment() {
 
         if (savedInstanceState != null) {
             rollValue = savedInstanceState.getInt(ROLL_VALUE, 0)
+
         }
     }
 
@@ -58,6 +59,7 @@ class DieFragment : Fragment() {
     }
 
     companion object {
+
         fun newInstance(sides: Int): DieFragment {
             val fragment = DieFragment()
             val args = Bundle()
