@@ -1,24 +1,24 @@
 package edu.temple.dicethrow
 
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ButtonFragment.OnButtonClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if( (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) is DieFragment)){
 
+        if (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) == null) {
+            val dieFragment = DieFragment.newInstance(6)
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView, dieFragment)
+                .commit()
         }
-        else {
-            DieFragment.newInstance(6)
-            (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as DieFragment).throwDie();
 
-        }
-        findViewById<Button>(R.id.rollDiceButton).setOnClickListener {
-            (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as DieFragment).throwDie();
+    }
 
-        }
+    override fun onButtonClick() {
+        val dieFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as? DieFragment
+        dieFragment?.throwDie()
     }
 }
