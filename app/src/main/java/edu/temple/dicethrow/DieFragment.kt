@@ -49,14 +49,14 @@ class DieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        throwDie()
-        view.setOnClickListener{
-            throwDie()
-        }
-
         //updates text by the viewmodel
         dieViewModel.getDieRoll().observe(viewLifecycleOwner){
             dieTextView.text = it.toString()
+        }
+
+        if(dieViewModel.getDieRoll().value == null)
+        {
+            throwDie()
         }
 
     }
