@@ -10,15 +10,11 @@ import android.widget.Button
 
 class ButtonFragment : Fragment() {
 
-    private var listener: OnButtonClickListener? = null
-
-    interface OnButtonClickListener {
-        fun onButtonClick()
-    }
+    private var listener: ButtonInterface? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnButtonClickListener) {
+        if (context is ButtonInterface) {
             listener = context
         } else {
             throw RuntimeException("$context must implement OnButtonClickListener")
