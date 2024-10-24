@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Button
 
 class ButtonFragment : Fragment() {
-
     private var listener: ButtonInterface? = null
 
     override fun onAttach(context: Context) {
@@ -36,7 +35,6 @@ class ButtonFragment : Fragment() {
         super.onDetach()
         listener = null
     }
-
     interface ButtonInterface{
         fun buttonClicked()
     }

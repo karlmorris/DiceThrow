@@ -11,7 +11,6 @@ import java.util.Locale
 import kotlin.random.Random
 
 class DieFragment : Fragment() {
-    //var rollValue: Int = 0
     val DIESIDE = "sidenumber"
     val ROLL_VALUE = "rollValue"
     lateinit var dieTextView: TextView
@@ -22,8 +21,6 @@ class DieFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-       // dieViewModel=ViewModelProvider(requireActivity())[DieViewModel::class.java]
         arguments?.let {
             it.getInt(DIESIDE).run {
                 dieSides=this
@@ -60,9 +57,7 @@ class DieFragment : Fragment() {
 
     fun throwDie() {
         dieViewModel.setDieRoll(Random.nextInt(1, dieSides + 1))
-
     }
-
 
     companion object {
 
