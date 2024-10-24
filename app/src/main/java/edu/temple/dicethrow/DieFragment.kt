@@ -6,27 +6,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
+import java.util.Locale
 import kotlin.random.Random
 
 class DieFragment : Fragment() {
-    var rollValue: Int = 0
+    //var rollValue: Int = 0
     val DIESIDE = "sidenumber"
     val ROLL_VALUE = "rollValue"
     lateinit var dieTextView: TextView
     var dieSides: Int = 20
+    val dieViewModel:DieViewModel by lazy {
+        ViewModelProvider(requireActivity())[DieViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
 
+       // dieViewModel=ViewModelProvider(requireActivity())[DieViewModel::class.java]
         arguments?.let {
-            dieSides = it.getInt(DIESIDE, 6)
+            it.getInt(DIESIDE).run {
+                dieSides=this
+            }
         }
 
-        if (savedInstanceState != null) {
-            rollValue = savedInstanceState.getInt(ROLL_VALUE, 0)
+//        if (savedInstanceState != null) {
+//            rollValue = savedInstanceState.getInt(ROLL_VALUE, 0)
 
-        }
+      //  }
     }
 
     override fun onCreateView(
@@ -36,27 +43,26 @@ class DieFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_die, container, false).apply {
             dieTextView = findViewById(R.id.dieTextView)
-            dieTextView.text = rollValue.toString()
+            //dieTextView.text = rollValue.toString()
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (rollValue == 0) {
+        dieViewModel.getDieRoll().observe(viewLifecycleOwner){
+            dieTextView.text=it.toString()
+        }
+        if(dieViewModel.getDieRoll().value==null){
             throwDie()
         }
+
     }
 
     fun throwDie() {
-        val result = Random.nextInt(1, dieSides + 1)
-        rollValue = result
-        dieTextView.text = result.toString()
+        dieViewModel.setDieRoll(Random.nextInt(1, dieSides + 1))
+
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(ROLL_VALUE, rollValue)
-    }
 
     companion object {
 

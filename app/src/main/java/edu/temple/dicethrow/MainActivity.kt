@@ -3,7 +3,7 @@ package edu.temple.dicethrow
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity(), ButtonFragment.OnButtonClickListener {
+class MainActivity : AppCompatActivity(), ButtonFragment.ButtonInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -17,8 +17,7 @@ class MainActivity : AppCompatActivity(), ButtonFragment.OnButtonClickListener {
 
     }
 
-    override fun onButtonClick() {
-        val dieFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as? DieFragment
-        dieFragment?.throwDie()
+    override fun buttonClicked() {
+        ( supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as? DieFragment)?.throwDie()
     }
 }

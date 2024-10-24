@@ -31,7 +31,7 @@ class ButtonFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_button, container, false).apply {
             findViewById<Button>(R.id.rollDiceButton).setOnClickListener {
-                listener?.onButtonClick()
+                (requireActivity() as ButtonInterface).buttonClicked()
             }
         }
     }
@@ -39,5 +39,9 @@ class ButtonFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+    interface ButtonInterface{
+        fun buttonClicked()
     }
 }
