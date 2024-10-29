@@ -11,18 +11,22 @@ import kotlin.random.Random
 class DieFragment : Fragment() {
 
     val DIESIDE = "sidenumber"
+    val DIEVALUE = "dievalue"
 
     lateinit var dieTextView: TextView
 
     var dieSides: Int = 6
+    var dieValue: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
-            it.getInt(DIESIDE).run {
-                dieSides = this
-            }
+            dieSides = it.getInt(DIESIDE)
         }
+
+        if(savedInstanceState != null)
+            dieValue = savedInstanceState.getInt(DIEVALUE)
     }
 
     override fun onCreateView(
@@ -35,15 +39,31 @@ class DieFragment : Fragment() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(DIEVALUE, dieValue)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        throwDie()
-        view.setOnClickListener{
+        if(dieValue == 0)
             throwDie()
-        }
+        else
+            dieTextView.text = dieValue.toString()
     }
 
     fun throwDie() {
-        dieTextView.text = Random.nextInt(dieSides).toString()
+        dieValue = Random.nextInt(dieSides).plus(1)
+        dieTextView.text = dieValue.toString()
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(dieSides: Int) =
+            DieFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(DIESIDE, dieSides)
+                }
+            }
     }
 }
