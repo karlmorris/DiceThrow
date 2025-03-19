@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="dieFragmentContainer1" type="id" />
+    <item name="rollButton" type="id" />
+    <item name="dieFragmentContainer2" type="id" />
+</resources>
