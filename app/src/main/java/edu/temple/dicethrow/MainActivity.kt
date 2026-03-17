@@ -1,6 +1,8 @@
 package edu.temple.dicethrow
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,5 +12,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        findViewById<Button>(R.id.rollDiceButton).setOnClickListener {
+
+            val fragment = supportFragmentManager
+                .findFragmentById(R.id.fragmentContainerView)
+
+            if (fragment is DieFragment) {
+                fragment.throwDie()
+            }
+        }
+
     }
 }
