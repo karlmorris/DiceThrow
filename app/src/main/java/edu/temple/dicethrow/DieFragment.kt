@@ -10,18 +10,33 @@ import kotlin.random.Random
 
 class DieFragment : Fragment() {
 
-    val DIESIDE = "sidenumber"
+    private val ROLL_KEY = "current_roll"
+    private lateinit var dieTextView: TextView
 
-    lateinit var dieTextView: TextView
+    private var currentRoll = 1
+    private var dieSides: Int = 6
 
-    var dieSides: Int = 6
+    companion object {
+        const val DIESIDE = "sidenumber"
+
+        fun newInstance(sides: Int = 6): DieFragment {
+            return DieFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(DIESIDE, sides)
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
-            it.getInt(DIESIDE).run {
-                dieSides = this
-            }
+            dieSides = it.getInt(DIESIDE)
+        }
+
+        savedInstanceState?.let {
+            currentRoll = it.getInt(ROLL_KEY, 1)
         }
     }
 
@@ -29,7 +44,6 @@ class DieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_die, container, false).apply {
             dieTextView = findViewById(R.id.dieTextView)
         }
@@ -37,13 +51,16 @@ class DieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        throwDie()
-        view.setOnClickListener{
-            throwDie()
-        }
+        dieTextView.text = currentRoll.toString()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(ROLL_KEY, currentRoll)
     }
 
     fun throwDie() {
-        dieTextView.text = Random.nextInt(dieSides).toString()
+        currentRoll = Random.nextInt(1, dieSides + 1)
+        dieTextView.text = currentRoll.toString()
     }
 }
