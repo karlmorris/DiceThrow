@@ -18,13 +18,19 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.fragmentContainerView, DieFragment.newInstance(20))
+                .add(R.id.fragmentContainerView2, DieFragment.newInstance(10))
                 .commit()
         }
-        findViewById<Button>(R.id.rollDiceButton).setOnClickListener{
+        findViewById<Button>(R.id.rollDiceButton).setOnClickListener {
             supportFragmentManager
-                .findFragmentById(R.id.fragmentContainerView)?.run{
+                .findFragmentById(R.id.fragmentContainerView)?.run {
+                    (this as DieFragment).throwDie()
+                }
+
+            supportFragmentManager
+                .findFragmentById(R.id.fragmentContainerView2)?.run {
                     (this as DieFragment).throwDie()
                 }
         }
+        }
     }
-}

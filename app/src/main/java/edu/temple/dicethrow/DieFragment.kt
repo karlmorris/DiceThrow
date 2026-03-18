@@ -22,13 +22,12 @@ class DieFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            it.getInt(DIESIDE).run {
-                dieSides = this
+            dieSides = it.getInt(DIESIDE, 6)
             }
-        }
 
-        savedInstanceState?.run{
-           currentRoll=  getInt(ROLL_KEY)
+
+        savedInstanceState?.let{
+           currentRoll=  it.getInt(ROLL_KEY)
         }
     }
 
@@ -60,12 +59,13 @@ class DieFragment : Fragment() {
         dieTextView.text = currentRoll.toString()
     }
 
-    companion object{
-        fun newInstance(sides: Int) = DieFragment().apply{
-            arguments = Bundle().apply{
-                putInt(DIESIDE,sides)
+    companion object {
+        fun newInstance(sides: Int = 6): DieFragment {
+            return DieFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(DIESIDE, sides)
+                }
             }
         }
     }
-
 }
