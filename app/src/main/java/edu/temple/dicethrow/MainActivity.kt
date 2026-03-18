@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val rollButton = findViewById<Button>(R.id.rollDiceButton)
-
+        // Set a click listener for the button
         rollButton.setOnClickListener {
             (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as? DieFragment)?.throwDie()
             (supportFragmentManager.findFragmentById(R.id.fragmentContainerView2) as? DieFragment)?.throwDie()
