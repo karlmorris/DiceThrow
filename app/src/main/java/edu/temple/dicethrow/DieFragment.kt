@@ -18,6 +18,16 @@ class DieFragment : Fragment() {
     private var dieSides: Int = 6
     private var currentRoll: Int = 1
 
+
+    companion object {
+        fun newInstance(sides: Int = 6): DieFragment {
+            return DieFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("sidenumber", sides)
+                }
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -51,17 +61,9 @@ class DieFragment : Fragment() {
     }
 
 
-    private fun throwDie() {
-        dieTextView.text = Random.nextInt(from = 1 ,dieSides).toString()
+    fun throwDie() {
+        currentRoll = Random.nextInt(1, dieSides + 1)
         dieTextView.text = currentRoll.toString()
-    }
-
-    companion object {
-        fun newInstance(sides: Int) = DieFragment().apply {
-            arguments = Bundle().apply {
-                putInt("sidenumber", sides)
-            }
-        }
     }
 
 }
