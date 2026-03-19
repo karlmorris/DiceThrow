@@ -6,21 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import kotlin.random.Random
 
 class DieFragment : Fragment() {
 
-    val DIESIDE = "sidenumber"
 
-    val ROLL_KEY = "current_roll"
+    val ROLLEDNUMKEY = "rolled number"
 
     lateinit var dieTextView: TextView
 
     var currentRoll = 1
 
-    var dieSides: Int = 6
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    private val dieViewModel: DieViewModel by lazy {
+        ViewModelProvider(requireActivity())[DieViewModel::class.java]
+    }
+
+    /*override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             it.getInt(DIESIDE).run {
@@ -32,7 +35,7 @@ class DieFragment : Fragment() {
             currentRoll = getInt(ROLL_KEY)
         }
 
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,32 +49,26 @@ class DieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dieViewModel.getDieRoll().observe(viewLifecycleOwner) {
+            dieTextView.text = it.toString()
+        }
 
-        if (currentRoll == 0) {
+        /*if (currentRoll == 0) {
             throwDie()
         } else {
             dieTextView.text = currentRoll.toString()
         }
 
-        throwDie()
+        dieViewModel.getDieRoll().observe(viewLifecycleOwner) {
+            dieTextView.text = it.toString()
+        }*/
     }
+
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
-        outState.putInt(ROLL_KEY, currentRoll)
+        outState.putInt(ROLLEDNUMKEY, currentRoll)
     }
 
-    fun throwDie() {
-        currentRoll = Random.nextInt(dieSides)
-        dieTextView.text = currentRoll.toString()
-    }
-
-    companion object {
-        fun newInstance (sides: Int) = DieFragment().apply {
-            arguments = Bundle().apply {
-                putInt(DIESIDE, sides)
-            }
-        }
-    }
 }
